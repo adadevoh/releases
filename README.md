@@ -1,2 +1,2 @@
 # releases
-Public releases repository for shel and other projects
+Public releases repository for my projects
