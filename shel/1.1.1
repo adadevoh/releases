@@ -1,0 +1,108 @@
+
+
+## Release Notes — v1.1.1: OTP Auth + Event Sharing
+
+### 🔐 Authentication
+
+**Replaced password-based auth with email OTP flow**
+- Sign up and login now use one-time passcodes (OTP) sent via email
+- First successful OTP verification creates the user account
+- Returning users reuse the same account and get a fresh session
+- OTP includes rate-limiting and expiry protection
+- Development mode uses fixed OTP `123456` for testing
+
+**New Auth Endpoints**
+- `POST /auth/otp` — request one-time passcode
+- `POST /auth/login` — verify OTP and create session
+
+**Environment-aware email sender**
+- Development: `dev@getshel.com`
+- Preview: `admin@preview.getshel.com`
+- Production: `admin@getshel.com`
+
+**Session unification**
+- All user sessions now use a single `kind = "user"` session type
+
+---
+
+### 👥 Event Sharing
+
+**Recipients can now participate in shared events**
+- Share events by adding recipients via email invite
+- Recipients access shared events at canonical URL: `{webHost}/events/{id}`
+- Shared members appear in the event feed as contributors with proper attribution
+- Owner-managed permissions distinguish owner vs. recipient actions
+
+**New Sharing Endpoints**
+- `POST /events/{eventId}/recipients` — add recipient(s)
+- `GET /events/{eventId}/recipients` — list recipients
+- `DELETE /events/{eventId}/recipients/{recipientId}` — remove recipient
+
+**Event response enhancements**
+- `role` — owner or recipient
+- `recipientId` — identifies recipient-owned entries
+
+**Entry attribution**
+- Entries now track whether they were created by the owner or a specific recipient
+- Database constraints enforce one logger per entry
+
+---
+
+### 🌐 Web App
+
+**New login flow**
+- Removed separate signup page — all users go through OTP-based login
+- Login modal handles both new and returning users
+- After successful login, users return to their requested protected route
+
+**Event sharing UI**
+- New event page at `/events/{id}` for web-only users and recipients
+- Event cards show role-based controls (owner vs. recipient actions)
+- Batch recipient entry in share form with per-recipient failure reporting
+
+---
+
+### 🗂️ Data & Persistence
+
+**OTP persistence**
+- OTP codes stored with hash verification
+- Includes expiry and rate-limit tracking
+
+**Event entry model updates**
+- Support for either `created_by_user_id` or `created_by_recipient_id`
+- Database constraints prevent ambiguous entry attribution
+
+**Cleanup**
+- Removed legacy password-based auth code and migration artifacts
+
+---
+
+### ✅ Testing & Validation
+
+- Updated API auth tests for OTP flow and rate-limiting
+- Added comprehensive share flow tests:
+  - Adding recipients (single and batch)
+  - Validation failures and edge cases
+  - Duplicate, owner, and self cases
+  - Owner/recipient permission checks
+  - Recipient cleanup on account deletion
+- Mail sender configuration tests for environment-specific rules
+
+---
+
+### 📊 Change Summary
+
+- **Files changed:** 82
+- **Additions:** 4,931
+- **Deletions:** 1,623
+
+---
+
+### 🎯 Product Alignment
+
+This release completes the v1.1.1 milestone for:
+- Email-only (passwordless) authentication
+- Shared event participation with role-based access
+- Owner-managed recipient invites via email
+- Canonical event URLs for recipients
+- Owner and recipient coexistence in the same event feed
