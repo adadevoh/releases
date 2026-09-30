@@ -1,0 +1,99 @@
+# SHeL v1.1.2: Architecture, BC Status, Logo & Public Docs Mirror
+
+## 📋 Summary
+
+This release finalizes documentation, branding, and deployment infrastructure for the SHeL platform while updating business capability status to reflect completed features.
+
+---
+
+## 📐 Architecture & Documentation
+
+**New hosted architecture documentation**
+- Added `shel.architecture.md` with comprehensive system design at repo root
+- Links use GitHub URLs pointing to `adadevoh/shel` on `main` branch for discoverability
+- Renamed product design file to `shel.design.md` for clarity
+- Architecture document includes business capability (BC) coverage catalog
+
+**Public documentation mirror**
+- Architecture document automatically synced to `adadevoh/releases` repository
+- Mirror workflow publishes to `files/shel/shel.architecture.md` when file changes
+- Enables centralized release documentation and version history
+
+---
+
+## ✅ Business Capability Status Updates
+
+**Shipped & marked complete:**
+- **AUTH** — OTP-based authentication with rate limiting and session management
+- **WEB** — Single Page Application (SPA) with event dashboard and sharing UI  
+- **SHARE** (Web API) — Event recipient management and shared event workflows
+
+**Not yet implemented / documented:**
+- **EVENTS-05** — Android event screens with local-first sync, grouped by topic
+- **SYNC** — Cross-device session and event synchronization
+- **NUDGE/NOTIFY/OPTOUT** — Notification delivery and recipient preferences
+
+---
+
+## 🎨 Branding
+
+**New SHeL logo**
+- Generated and added to `shel.web/public/` directory
+- Accessible at `/logo.png` endpoint for Login/SignUp pages and Auth0 integration
+- Used in preview and production deployments
+
+---
+
+## 🔧 Infrastructure
+
+**Release workflow enhancements**
+- Updated `mirror-releases.yml` workflow with necessary repository secrets
+- Automatic architecture file publishing to releases repo on `preview` branch merges
+- Improved DB persistence for local development (Docker)
+
+---
+
+## 🌐 Frontend Updates
+
+**User experience improvements**
+- Display username in dashboard and account menu
+- Mark "Share" as shipped feature in landing page carousel
+- Implement feed polling for real-time event updates
+- Auth0 preview environment gate enabled
+
+**Web app runtime**
+- Rewrote web app as full Single Page Application (SPA)
+- Improved session handling and route management
+- Fixed session gate and authentication flows
+
+---
+
+## 🐛 Bug Fixes & Improvements
+
+- Docker database persistence for consistent local development
+- Token uniqueness guaranteed even within same second
+- Session clock refactoring: 15-minute JWT, hard 1-hour session limit
+- Central error handling middleware implementation
+- Session idle timeout configurable (default 15 minutes)
+- Improved UI session handling with notification service
+
+---
+
+## 📊 Change Summary
+
+- **Files changed:** 16
+- **Additions:** 202
+- **Deletions:** 103
+
+---
+
+## ✨ What's Next
+
+Development focus shifts to advanced capabilities:
+- **EVENTS-05**: Android event screens with local-first sync, grouped by topic
+- **SYNC**: Cross-device session and event synchronization  
+- **NUDGE/NOTIFY/OPTOUT**: User notification and preference system
+
+---
+
+**Made with [Cursor](https://cursor.com)**
